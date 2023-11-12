@@ -3,15 +3,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import PeopleIcon from '@mui/icons-material/People';
+// import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PowerSettingsNewRoundedIcon from '@mui/icons-material/PowerSettingsNewRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
-import { loginActions } from "../store/loginSlice";
-import { useDispatch } from "react-redux";
+// import { loginActions } from "../store/loginSlice";
+// import { useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-
 
 export default function MainListItems() {
     return (

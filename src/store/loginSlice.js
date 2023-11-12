@@ -10,7 +10,7 @@ const loginSlice = createSlice({
     },
     reducers:{
         login(state, action){
-            if(state.email == action.payload.email && state.password == action.payload.password){
+            if(state.email === action.payload.email && state.password === action.payload.password){
                 state.isLogged = true
                 window.location.href = '/dashboard';
             }else{

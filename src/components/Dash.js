@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {CssBaseline, alpha, Container, Toolbar, List, Typography, Divider, IconButton, Badge, Box } from '@mui/material';
-import {Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, Notifications as NotificationsIcon} from '@mui/icons-material';
+import {CssBaseline, alpha, Container, Toolbar, List, Typography, IconButton, Box } from '@mui/material';
+import {Menu as MenuIcon, ChevronLeft as ChevronLeftIcon} from '@mui/icons-material';
 
 import MainListItems from './listitems';
 import { AppBar, Drawer} from './appbar_drawer';
 import SearchBox from './SearchBox';
 import NotificationDialog from './NotificationDialog';
-import SGPA_Calculator from './SGPA_Calculator';
-import CGPACalculator from './CGPA_Calculator';
+// import SGPA_Calculator from './SGPA_Calculator';
+// import CGPACalculator from './CGPA_Calculator';
 import { Outlet } from 'react-router-dom';
 import avatar25 from "../avatars/avatar_25.jpg"
 import Avatar from '@mui/material/Avatar';

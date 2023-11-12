@@ -5,7 +5,6 @@ import {
   setSemesterData,
   setCGPA,
   setErrorMessage,
-  clearCGPAData,
 } from '../store/cgpaSlice';
 import {
   TextField,
@@ -22,7 +21,7 @@ import {addToHistory} from '../store/historySlice';
 const CGPACalculator = () => {
   const dispatch = useDispatch();
   const { studentId, cgpa, semesterData, errorMessage } = useSelector((state) => state.cgpa);
-  const {historyData} = useSelector((state) => state.history);
+  // const {historyData} = useSelector((state) => state.history);
 
   const calculateCGPA = () => {
     setErrorMessage('');

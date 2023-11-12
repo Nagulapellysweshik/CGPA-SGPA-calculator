@@ -35,7 +35,7 @@ export default function NotificationDialog() {
         </Badge>
       </IconButton>
       <IconButton color="inherit">
-        <img src={avatar25} style={{borderRadius:'50%', width: '40px', marginLeft:"15px"}}/>
+        <img src={avatar25} alt='avatar' style={{borderRadius:'50%', width: '40px', marginLeft:"15px"}}/>
       </IconButton>
       <Popover
         open={open}

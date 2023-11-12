@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import avatar1 from "./avatars/avatar_1.jpg"
 import avatar2 from "./avatars/avatar_2.jpg"
 import avatar3 from "./avatars/avatar_3.jpg"

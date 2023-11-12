@@ -20,9 +20,9 @@
   const SGPACalculator = () => {
     const dispatch = useDispatch();
     const sgpaState = useSelector((state) => state.sgpa);
-    const { studentId, semester, subjects, sgpa, totalCredits } = sgpaState;
-    const historyState = useSelector((state) => state.history)
-    const { historyData} = historyState;
+    const { studentId, semester, subjects, sgpa } = sgpaState;
+    // const historyState = useSelector((state) => state.history)
+    // const { historyData} = historyState;
     
     useEffect(() => {
       const storedSubjects = JSON.parse(localStorage.getItem(studentId)) || {};
