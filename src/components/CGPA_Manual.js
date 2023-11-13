@@ -1,73 +1,59 @@
-// CGPAManual.js
-
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setStudentId,
-  setSemester,
-  setSubjects,
-  setCGPA,
-  setTotalCredits,
-  clearData,
-} from '../store/cgpaManualSlice';
-import { addToHistory } from '../store/historySlice';
-import {
-  TextField,
-  Button,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Typography,
-  Paper,
-  Grow,
-} from '@mui/material';
+import React, { useState } from 'react';
+import Grow from '@mui/material/Grow';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import {addToHistory} from '../store/historySlice';
+import { useDispatch } from 'react-redux';
 
 const CGPAManual = () => {
   const dispatch = useDispatch();
-  const cgpaState = useSelector((state) => state.cgpaManual);
-  const { studentId, semester, subjects, cgpa, totalCredits } = cgpaState;
-  const historyState = useSelector((state) => state.history);
-  const { historyData } = historyState;
-
-  useEffect(() => {
-    dispatch(clearData());
-  }, [studentId, dispatch]);
+  const [studentId, setStudentId] = useState('');
+  const [semesters, setSemesters] = useState([
+    { id: 1, semester: 'semester-1', sgpa: 0, creditsAwarded: 0, totalCredits: 0, },
+  ]);
+  const [calculatedCGPA, setCalculatedCGPA] = useState('0.00');
 
   const addSemester = () => {
-    const semesterSGPA = cgpa * totalCredits;
-    dispatch(addToHistory({ studentId, type: 'CGPA', grade: semesterSGPA.toFixed(2) }));
-    dispatch(clearData());
+    const newSemester = {
+      id: semesters.length + 1,
+      semester: `semester-${semesters.length + 1}`,
+      sgpa: 0,
+      creditsAwarded: 0,
+      totalCredits: 0,
+    };
+    setSemesters([...semesters, newSemester]);
   };
-
 
   const calculateCGPA = () => {
+    let totalGradeCredits = 0;
     let totalCredits = 0;
-    let totalPoints = 0;
 
-    subjects.forEach((subject) => {
-      totalCredits += parseInt(subject.creditsAwarded || 0, 10);
-      totalPoints += parseInt(subject.gradePoints || 0, 10) * parseInt(subject.creditsAwarded || 0, 10);
-    });
-
-    const calculatedCGPA = totalPoints / totalCredits || 0;
-    dispatch(setCGPA(calculatedCGPA));
-    dispatch(setTotalCredits(totalCredits));
+    for (let i = 0; i < semesters.length; i++) {
+      totalGradeCredits += semesters[i].sgpa * semesters[i].creditsAwarded;
+      totalCredits += parseInt(semesters[i].totalCredits);
+    }
+    setCalculatedCGPA((totalGradeCredits / totalCredits).toFixed(2));
+    dispatch(addToHistory({ studentId, type: 'CGPA', grade: (totalGradeCredits / totalCredits).toFixed(2)}));
   };
 
-
-  const handleSetSubjects = (value, subject, index, setKey) => {
-    dispatch(
-      setSubjects([
-        ...subjects.slice(0, index),
-        { ...subject, [setKey]: value },
-        ...subjects.slice(index + 1),
-      ])
+  const handleSetSemester = (value, semester, setKey) => {
+    setSemesters((prevSemesters) =>
+      prevSemesters.map((sem) =>
+        sem.id === semester.id ? { ...sem, [setKey]: value } : sem
+      )
     );
   };
+
+  const deleteLastSemester = () => {
+    setSemesters((prevSemesters) => prevSemesters.slice(0, prevSemesters.length - 1));
+  };
+
   return (
     <Grow in={true} timeout={1000}>
       <Box
@@ -95,96 +81,72 @@ const CGPAManual = () => {
           value={studentId}
           fullWidth
           margin="normal"
-          onChange={(e) => dispatch(setStudentId(e.target.value))}
+          onChange={(e) => setStudentId(e.target.value)}
           required
         />
 
-        <FormControl fullWidth variant="outlined" margin="normal" required>
-          <InputLabel>Semester</InputLabel>
-          <Select
-            value={semester}
-            label="Semester"
-            onChange={(e) => dispatch(setSemester(e.target.value))}
-          >
-            <MenuItem value="semester-1">Semester 1</MenuItem>
-            <MenuItem value="semester-2">Semester 2</MenuItem>
-            <MenuItem value="semester-3">Semester 3</MenuItem>
-            <MenuItem value="semester-4">Semester 4</MenuItem>
-          </Select>
-        </FormControl>
-
-        {subjects.map((subject, index) => (
+        {semesters.map((semester, index) => (
           <Grow key={index} in={true} timeout={500 + index * 100}>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              mt={2}
-              key={index}
-              component={Paper}
-              elevation={3}
-              p={2}
-              borderRadius={8}
-            >
-              <TextField
-                label="Subject Name"
-                variant="outlined"
-                value={subject.name}
-                fullWidth
-                margin="normal"
-                sx={{ margin: 2 }}
-                required
-                onChange={(e) => dispatch(handleSetSubjects(e.target.value, subject, index, 'name'))}
-              />
+          <Box key={semester.id} display="flex" width="100%" mt={2}>
+            <Typography sx={{ mx: 5, marginTop: 4 }}>
+              <strong>Semester{semester.id}</strong>
+            </Typography>
 
-              <TextField
-                label="Grade Points"
-                variant="outlined"
-                value={subject.gradePoints}
-                fullWidth
-                margin="normal"
-                sx={{ margin: 2 }}
-                required
-                inputProps={{ type: 'number', min: 0, max: 10 }}
-                onChange={(e) =>
-                  dispatch(handleSetSubjects(parseInt(e.target.value, 10), subject, index, 'gradePoints'))
-                }
-              />
+            <TextField
+              label="SGPA"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              required
+              sx={{ mx: 2}}
+              inputProps={{ type: 'number', min: 0, max: 10 }}
+              onChange={(e) => handleSetSemester(e.target.value, semester, 'sgpa')}
+            />
 
-              <TextField
-                label="Credits Awarded"
-                variant="outlined"
-                value={subject.creditsAwarded}
-                fullWidth
-                margin="normal"
-                sx={{ margin: 2 }}
-                required
-                inputProps={{ type: 'number', min: 0 }}
-                onChange={(e) =>
-                  dispatch(handleSetSubjects(parseInt(e.target.value, 10), subject, index, 'creditsAwarded'))
-                }
-              />
-            </Box>
+            <TextField
+              label="Credits Awarded"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              required
+              sx={{ marginRight: 2}}
+              inputProps={{ type: 'number', min: 0 }}
+              onChange={(e) => handleSetSemester(e.target.value, semester, 'creditsAwarded')}
+            />
+
+            <TextField
+              label="Total Credits"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              required
+              inputProps={{ type: 'number', min: 0 }}
+              onChange={(e) => handleSetSemester(e.target.value, semester, 'totalCredits')}
+            />
+
+            {semester.id === semesters.length && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={deleteLastSemester}
+                style={{ marginLeft: '10px', height: '56px', backgroundColor: '#ef5350' }}
+                sx={{marginTop: 2}}
+              >
+                <DeleteIcon />
+              </Button>
+            )}
+          </Box>
           </Grow>
         ))}
-
-        {/* <Button
-          variant="contained"
-          color="primary"
-          onClick={addSubject}
-          mt={2}
-          style={{ marginTop: '16px' }}
-        >
-          Add Subject
-        </Button> */}
 
         <Button
           variant="contained"
           color="primary"
           onClick={addSemester}
           mt={2}
-          style={{ marginTop: '16px' }}
+          style={{ marginTop: '16px', backgroundColor: '#4caf50' }}
         >
+          <AddIcon />
           Add Semester
         </Button>
 
@@ -193,14 +155,15 @@ const CGPAManual = () => {
           color="primary"
           onClick={calculateCGPA}
           mt={2}
-          style={{ marginTop: '16px' }}
+          style={{ marginTop: '16px', backgroundColor: '#2196f3' }}
         >
+          <EqualizerIcon />
           Calculate CGPA
         </Button>
 
-        <Box mt={2}>
-          <strong>Overall CGPA: {cgpa.toFixed(2)}</strong>
-        </Box>
+        {semesters.length > 0 && (
+          <Typography sx={{ my: 3,}}><strong>CGPA: {calculatedCGPA}</strong></Typography>
+        )}
       </Box>
     </Grow>
   );

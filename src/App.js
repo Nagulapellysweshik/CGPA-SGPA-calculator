@@ -7,7 +7,6 @@ import CGPACalculator from "./components/CGPA_Calculator";
 import SGPACalculator from "./components/SGPA_Calculator";
 import History from "./components/History";
 import Calendar from "./components/Calender";
-// import CGPAManual from "./components/CGPA_Manual";
 const theme = createTheme({
   palette:{
     background: {

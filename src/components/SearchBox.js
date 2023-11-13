@@ -40,7 +40,6 @@ const Search = styled('div')(({ theme }) => ({
       },
     },
   }));
-
   export default function SearchBox() {
     return (
         <Search>

@@ -45,6 +45,5 @@ export default function Login() {
                 <Link sx={{float: 'right',marginTop: 2}} href="#">Forget password?</Link>
             </CardContent>
         </Card>
-
     )
 }

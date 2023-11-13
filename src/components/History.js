@@ -79,26 +79,26 @@ const History = () => {
   };
 
   return (
-  <Grow in={true} timeout={1000}>
-    <div style={{ height: '100%', width: '100%', animation: 'fadeIn 3s' }}>
-      <Card sx={{padding:5, borderRadius: 5, marginBottom: 5, marginTop: 5}}>
-      <Typography variant="h3" gutterBottom sx={{textAlign: 'center', marginTop:'5px'}}>History</Typography>
-        <TextField label="Search User.." variant="outlined" size="medium" value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          style={{ marginBottom: '16px', borderRadius: '50px',}}
-        />
-        
-        <DataGrid rows={rows} columns={columns} pageSize={5} rowHeight={60}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25, 100]}
-          checkboxSelection
-        />
+    <Grow in={true} timeout={1000}>
+      <div style={{ height: '100%', width: '100%', animation: 'fadeIn 3s' }}>
+        <Card sx={{padding:5, borderRadius: 5, marginBottom: 5, marginTop: 5}}>
+          <Typography variant="h3" gutterBottom sx={{textAlign: 'center', marginTop:'5px'}}>History</Typography>
+            <TextField label="Search User.." variant="outlined" size="medium" value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              style={{ marginBottom: '16px', borderRadius: '50px',}}
+            />
+            
+          {historyData.length !== 0 ? <DataGrid rows={rows} columns={columns} pageSize={5} rowHeight={60}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 25, 100]}
+            checkboxSelection
+          /> : <Typography> No calculations done !!</Typography>}
         </Card>
-    </div>
+      </div>
     </Grow> 
   );
 };

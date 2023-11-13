@@ -3,14 +3,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PowerSettingsNewRoundedIcon from '@mui/icons-material/PowerSettingsNewRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
-// import { loginActions } from "../store/loginSlice";
-// import { useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
+
 
 export default function MainListItems() {
     return (
@@ -71,3 +69,49 @@ export default function MainListItems() {
         </React.Fragment>
     );
 }
+
+
+
+
+
+// import * as React from 'react';
+// import ListItemButton from '@mui/material/ListItemButton';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import ListItemText from '@mui/material/ListItemText';
+// import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+// import BarChartIcon from '@mui/icons-material/BarChart';
+// import PowerSettingsNewRoundedIcon from '@mui/icons-material/PowerSettingsNewRounded';
+// import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+// import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
+// import { NavLink } from 'react-router-dom';
+
+// const activeStyle = {
+//   backgroundColor: '#f0f0f0', // Set your desired active background color
+//   color: 'blue', // Set your desired active text color
+// };
+
+// const navigationLinks = [
+//   { to: '/Dashboard', text: 'Home', icon: <HomeRoundedIcon /> },
+//   { to: 'SGPA-calculator', text: 'SGPA Calculator', icon: <CalculateRoundedIcon /> },
+//   { to: 'CGPA-calculator', text: 'CGPA Calculator', icon: <CalculateRoundedIcon /> },
+//   { to: 'Calendar', text: 'Calendar', icon: <CalendarMonthRoundedIcon /> },
+//   { to: 'History', text: 'History', icon: <BarChartIcon /> },
+//   { to: '/', text: 'Logout', icon: <PowerSettingsNewRoundedIcon /> },
+// ];
+
+// const MainListItems = () => {
+//   return (
+//     <>
+//       {navigationLinks.map((link) => (
+//         <NavLink key={link.to} to={link.to} style={{ textDecoration: 'none', color: 'black' }} activeStyle={activeStyle}>
+//           <ListItemButton>
+//             <ListItemIcon>{link.icon}</ListItemIcon>
+//             <ListItemText primary={link.text} />
+//           </ListItemButton>
+//         </NavLink>
+//       ))}
+//     </>
+//   );
+// };
+
+// export default MainListItems;

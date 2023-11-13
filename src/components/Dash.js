@@ -6,11 +6,10 @@ import MainListItems from './listitems';
 import { AppBar, Drawer} from './appbar_drawer';
 import SearchBox from './SearchBox';
 import NotificationDialog from './NotificationDialog';
-// import SGPA_Calculator from './SGPA_Calculator';
-// import CGPACalculator from './CGPA_Calculator';
 import { Outlet } from 'react-router-dom';
 import avatar25 from "../avatars/avatar_25.jpg"
 import Avatar from '@mui/material/Avatar';
+
 
 export default function Dash() {
     const [open, setOpen] = React.useState(true);

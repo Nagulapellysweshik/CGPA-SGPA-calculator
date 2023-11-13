@@ -15,6 +15,7 @@
     Grow,
   } from '@mui/material';
   import DeleteIcon from '@mui/icons-material/Delete';
+  import AddIcon from '@mui/icons-material/Add';
   import EqualizerIcon from '@mui/icons-material/Equalizer';
 
   const SGPACalculator = () => {
@@ -180,8 +181,9 @@
             color="primary"
             onClick={addSubject}
             mt={2}
-            style={{ marginTop: '16px' }}
+            style={{ marginTop: '16px', backgroundColor: '#4caf50' }}
           >
+            <AddIcon />
             Add Subject
           </Button>
           <Button
@@ -189,8 +191,9 @@
             color="primary"
             onClick={calculateSGPA}
             mt={2}
-            style={{ marginTop: '16px' }}
+            style={{ marginTop: '16px', backgroundColor: '#2196f3'}}
           >
+            <EqualizerIcon />
             Calculate SGPA
           </Button>
 
