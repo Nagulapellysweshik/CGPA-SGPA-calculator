@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { dummyHistory } from '../data';
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem('historyData');
@@ -24,7 +24,7 @@ const saveState = (state) => {
 const historySlice = createSlice({
   name: 'history',
   initialState: {
-    historyData: loadState() || [], // Load historyData from localStorage
+    historyData: loadState() || dummyHistory, // Load historyData from localStorage
   },
   reducers: {
     addToHistory: (state, action) => {

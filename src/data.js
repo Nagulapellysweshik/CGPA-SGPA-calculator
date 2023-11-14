@@ -1,4 +1,3 @@
-// import React from 'react';
 import avatar1 from "./avatars/avatar_1.jpg"
 import avatar2 from "./avatars/avatar_2.jpg"
 import avatar3 from "./avatars/avatar_3.jpg"
@@ -56,3 +55,133 @@ for (let rollNumber = 1; rollNumber <= 60; rollNumber++) {
   }
 }
 
+export const getCategoryColor = (category) => {
+  switch (category) {
+      case 'Work':
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgb(145, 85, 253)',
+              'backgroundColor': ' rgba(145, 85, 253, 0.12)'
+          };
+      case 'Personal':
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgb(255, 76, 81)',
+              'backgroundColor': 'rgba(255, 76, 81, 0.12)'
+          };
+      case 'Holiday':
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgb(86, 202, 0)',
+              'backgroundColor': 'rgba(86, 202, 0, 0.12)'
+          };
+      case 'Other':
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgb(22, 177, 255)',
+              'backgroundColor': 'rgba(22, 177, 255, 0.12)'
+          };
+      case 'Family':
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgb(255, 180, 0)',
+              'backgroundColor': 'rgba(255, 180, 0, 0.12)'
+          };
+      default:
+          return {
+              'borderColor': 'transparent',
+              'color': 'rgba(58, 53, 65, 0.8)',
+              'backgroundColor': 'rgba(58, 53, 65, 0.12)'
+          };
+  }
+};
+
+export const defaultEvents = [
+  {
+      title: 'Marks submission',
+      category: 'Work',
+      start: new Date('2023-11-15T09:00:00'),
+      end: new Date('2023-11-15T12:00:00'),
+      allDay: false
+  },
+  {
+    title: 'Update Attendance',
+    category: 'Work',
+    start: new Date('2023-11-30T09:00:00'),
+    end: new Date('2023-11-30T12:00:00'),
+    allDay: false
+  },
+  {
+    title: 'Update Attendance',
+    category: 'Work',
+    start: new Date('2023-10-31T09:00:00'),
+    end: new Date('2023-10-31T12:00:00'),
+    allDay: false
+  },
+  {
+      title: 'Party',
+      category: 'Personal',
+      start: new Date('2023-11-19T14:00:00'),
+      end: new Date('2023-11-19T17:00:00'),
+      allDay: false
+  },
+  {
+      title: 'Shimla Trip',
+      category: 'Family',
+      start: new Date('2023-12-04T14:00:00'),
+      end: new Date('2023-12-07T17:00:00'),
+      allDay: true
+  },
+  {
+      title: "children's Day",
+      category: 'Holiday',
+      start: new Date('2023-11-14T00:00:00'),
+      end: new Date('2023-11-14T23:59:59'),
+      allDay: true
+  },
+  {
+    title: "Christmas",
+    category: 'Holiday',
+    start: new Date('2023-12-25T00:00:00'),
+    end: new Date('2023-12-25T23:59:59'),
+    allDay: true
+   },
+  {
+    title: "Meeting Day",
+    category: 'Work',
+    start: new Date('2023-11-20T00:00:00'),
+    end: new Date('2023-11-20T23:59:59'),
+    allDay: false
+  },
+  {
+    title: "Gym",
+    category: 'Personal',
+    start: new Date('2023-11-18T00:00:00'),
+    end: new Date('2023-11-18T23:59:59'),
+    allDay: true
+  },
+  {
+      title: "Slip Test",
+      category: 'Work',
+      start: new Date('2023-11-23T21:00:00'),
+      end: new Date('2023-11-23T21:59:59'),
+      allDay: false
+  }
+];
+
+export const dummyHistory = [
+    {"studentId":"25","type":"semester-1","grade":"8.73"},
+    {"studentId":"24","type":"semester-1","grade":"8.67"},
+    {"studentId":"23","type":"semester-2","grade":"7.75"},
+    {"studentId":"13","type":"semester-2","grade":"7.75"},
+    {"studentId":"15","type":"semester-1","grade":"8.57"},
+    {"studentId":"23","type":"semester-2","grade":"7.13"},
+    {"studentId":"21","type":"semester-1","grade":"8.57"},
+    {"studentId":"14","type":"semester-2","grade":"8.50"},
+    {"studentId":"15","type":"CGPA","grade":"9.00"},
+    {"studentId":"51","type":"CGPA","grade":"9.00"},
+    {"studentId":"25","type":"CGPA","grade":"9.00"},
+    {"studentId":"23","type":"CGPA","grade":"8.69"},
+    {"studentId":"21","type":"CGPA","grade":"8.30"},
+    {"studentId":"23","type":"semester-2","grade":"7.13"},
+]

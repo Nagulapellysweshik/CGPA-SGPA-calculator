@@ -8,15 +8,13 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
-import {addToHistory} from '../store/historySlice';
+import { addToHistory } from '../store/historySlice';
 import { useDispatch } from 'react-redux';
 
 const CGPAManual = () => {
   const dispatch = useDispatch();
   const [studentId, setStudentId] = useState('');
-  const [semesters, setSemesters] = useState([
-    { id: 1, semester: 'semester-1', sgpa: 0, creditsAwarded: 0, totalCredits: 0, },
-  ]);
+  const [semesters, setSemesters] = useState([{ id: 1, semester: 'semester-1', sgpa: 0, creditsAwarded: 0, totalCredits: 0, },]);
   const [calculatedCGPA, setCalculatedCGPA] = useState('0.00');
 
   const addSemester = () => {
@@ -66,7 +64,7 @@ const CGPAManual = () => {
         boxShadow={5}
         borderRadius={8}
         bgcolor="white"
-        width="80%"
+        width="90%"
         mx="auto"
         my={5}
       >
@@ -126,10 +124,10 @@ const CGPAManual = () => {
 
             {semester.id === semesters.length && (
               <Button
-                variant="contained"
-                color="secondary"
+                variant="outlined"
+                color="error"
                 onClick={deleteLastSemester}
-                style={{ marginLeft: '10px', height: '56px', backgroundColor: '#ef5350' }}
+                style={{ marginLeft: '10px', height: '56px' }}
                 sx={{marginTop: 2}}
               >
                 <DeleteIcon />
@@ -144,10 +142,10 @@ const CGPAManual = () => {
           color="primary"
           onClick={addSemester}
           mt={2}
-          style={{ marginTop: '16px', backgroundColor: '#4caf50' }}
+          style={{ marginTop: '16px' }}
         >
           <AddIcon />
-          Add Semester
+       
         </Button>
 
         <Button
@@ -155,7 +153,7 @@ const CGPAManual = () => {
           color="primary"
           onClick={calculateCGPA}
           mt={2}
-          style={{ marginTop: '16px', backgroundColor: '#2196f3' }}
+          style={{ marginTop: '16px' }}
         >
           <EqualizerIcon />
           Calculate CGPA
@@ -168,5 +166,6 @@ const CGPAManual = () => {
     </Grow>
   );
 };
-
 export default CGPAManual;
+
+

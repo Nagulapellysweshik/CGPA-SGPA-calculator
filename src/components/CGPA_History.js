@@ -1,21 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setStudentId,
-  setSemesterData,
-  setCGPA,
-  setErrorMessage,
-  clearCGPAData,
-} from '../store/cgpaSlice';
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Paper,
-  Grow,
-  Divider,
-} from '@mui/material';
+import { setStudentId, setSemesterData, setCGPA, setErrorMessage, clearCGPAData,} from '../store/cgpaSlice';
+import { TextField, Button, Box, Typography, Paper, Grow, Divider,} from '@mui/material';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import {addToHistory} from '../store/historySlice';
 
@@ -79,7 +65,7 @@ const CGPAHistory = () => {
         boxShadow={5}
         borderRadius={8}
         bgcolor="white"
-        width="80%"
+        width="90%"
         mx="auto"
         my={5}
       >
@@ -103,18 +89,14 @@ const CGPAHistory = () => {
           required
         />
 
-        {errorMessage && (
-          <Typography color="error" mt={2}>
-            {errorMessage}
-          </Typography>
-        )}
+        {errorMessage && (<Typography color="error" mt={2}>{errorMessage} </Typography>)}
 
         <Button
           variant="contained"
           color="primary"
           onClick={calculateCGPA}
           mt={2}
-          style={{ marginTop: '16px', backgroundColor: '#4CAF50' }}
+          style={{ marginTop: '16px'}}
         >
           Calculate CGPA
         </Button>
@@ -133,7 +115,7 @@ const CGPAHistory = () => {
               flexWrap="wrap"
             >
               {semesterData.map(({ semester, sgpa }) => (
-                <Grow key={semester} in={true} timeout={1000}>
+                <Grow key={semester} in={true} timeout={1500}>
                   <Box
                     display="flex"
                     flexDirection="column"

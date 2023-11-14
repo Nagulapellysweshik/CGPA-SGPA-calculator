@@ -6,23 +6,24 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromHistory } from '../store/historySlice';
 import { rollNumberData } from '../data';
+import avatar3 from "../avatars/avatar_3.jpg"
 
 const History = () => {
   const dispatch = useDispatch();
   const historyData = useSelector((state) => state.history.historyData);
   const [searchText, setSearchText] = React.useState('');
-
+  
   const handleDelete = (id) => {
     dispatch(removeFromHistory(id));
   };
-
+  
   const columns: GridColDef[] = [
     {field: 'avatar', headerName: 'Name', width: 270,
-      renderCell: (params) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+    renderCell: (params) => (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
           <img src={params.row.avatar} alt="avatar"
             style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '8px' }}
-          />
+            />
           <Typography>{params.row.name}</Typography>
         </div>
       ),
@@ -31,20 +32,22 @@ const History = () => {
     { field: 'type', headerName: 'Type', width: 180 },
     { field: 'grade', headerName: 'Grade', width: 180 },
     { field: 'actions', headerName: '', width: 100, renderCell: (params) => (
-        <ActionMenu handleDelete={() => handleDelete(params.row.id)} />
+      <ActionMenu handleDelete={() => handleDelete(params.row.id)} />
       ),
     },
   ];
-
-  const rows = historyData
-    .filter((item) => { const studentInfo = rollNumberData[item.studentId];
+  
+  // console.log(historyData)
+  let rows = historyData
+    .filter((item) => { const studentInfo = rollNumberData[item.studentId] || {...item, name: "Unknown"};
       return studentInfo && studentInfo.name.toLowerCase().includes(searchText.toLowerCase());
     })
     .map((item, index) => ({id: index, name: rollNumberData[item.studentId]?.name || 'Unknown', type: item.type,
-      grade: item.grade,
       studentId: item.studentId,
-      avatar: rollNumberData[item.studentId]?.avatar,
+      grade: item.grade,
+      avatar: rollNumberData[item.studentId]?.avatar || avatar3,
     }));
+  // console.log(rows)
   const ActionMenu = ({ handleDelete }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -70,8 +73,7 @@ const History = () => {
         </IconButton>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem onClick={() => handleMenuItemClick('delete')}>
-            <DeleteIcon fontSize="small" />
-            Delete
+            <DeleteIcon fontSize="small" color='error'/>
           </MenuItem>
         </Menu>
       </div>

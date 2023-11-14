@@ -9,6 +9,9 @@ import History from "./components/History";
 import Calendar from "./components/Calender";
 const theme = createTheme({
   palette:{
+    primary: {
+      main: '#9155FD', 
+    },
     background: {
       default: '#eff0f6'
     }
@@ -39,8 +42,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router}>
-      </RouterProvider>
+      <RouterProvider router={router}/>
     </ThemeProvider>
   );
 }

@@ -30,15 +30,15 @@ export default function NotificationDialog() {
 
   return (
     <div style={{ position: 'relative' }}>
-      <IconButton>
+      <IconButton sx={{marginRight: '10px'}}>
         <img src={english} alt='avatar' style={{ width: '40px', marginLeft:"15px"}}/>
       </IconButton>
       <IconButton color="inherit" onClick={handleClick}>
         <Badge badgeContent={4} color="secondary">
-          <NotificationsIcon color='primary'/>
+          <NotificationsIcon color='primary' fontSize='large'/>
         </Badge>
       </IconButton>
-      <IconButton color="inherit">
+      <IconButton color="inherit" sx={{marginRight: '10px'}}>
         <img src={avatar25} alt='avatar' style={{borderRadius:'50%', width: '40px', marginLeft:"15px"}}/>
       </IconButton>
       <Popover

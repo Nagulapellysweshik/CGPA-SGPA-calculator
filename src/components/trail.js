@@ -42,13 +42,16 @@ const Calendar = () => {
         { id: 6, category: 'Other', checked: true }
     ]);
 
+
+
+
+
     const handleAddEventClick = () => {
         setSelectedEvent(null);
         setDrawerOpen(true);
     };
 
     const handleDateClick = (info) => {
-        handleReset();
         setDrawerOpen(true);
         const formattedStartDate = new Date(info.dateStr).toISOString().slice(0, 16);
         const endDateTime = new Date(info.dateStr);

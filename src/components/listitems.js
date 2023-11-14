@@ -9,15 +9,15 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
 import { NavLink } from 'react-router-dom';
 
-
 export default function MainListItems() {
+
     return (
         <React.Fragment>
             <NavLink to="/Dashboard" style={{textDecoration: 'none', color:'black'}}> 
                 <ListItemButton>
-                    <ListItemIcon>
+                    <ListItemIcon >
                         <HomeRoundedIcon />
-                    </ListItemIcon>
+                    </ListItemIcon >
                     <ListItemText primary="Home" />
                 </ListItemButton>
             </NavLink>
