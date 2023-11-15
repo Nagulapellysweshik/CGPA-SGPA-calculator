@@ -7,16 +7,18 @@ import listPlugin from '@fullcalendar/list';
 import {Card,CardContent,Button,Drawer,TextField,MenuItem,Box,Checkbox,IconButton,Typography,Switch,FormControlLabel,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import '../index.css';
-import { getCategoryColor, defaultEvents } from '../data';
+import { getCategoryColor, dummyEvents } from '../data';
 
 
 const saveEventsToStorage = (events) => {
     localStorage.setItem('calendarEvents', JSON.stringify(events));
+    // console.log(localStorage.getItem('calendarEvents'))
 };
 
 const loadEventsFromStorage = () => {
     const storedEvents = localStorage.getItem('calendarEvents');
-    return storedEvents !== "[]" ? JSON.parse(storedEvents) : defaultEvents;  
+    // console.log(storedEvents, dummyEvents)
+    return storedEvents === null ? dummyEvents : JSON.parse(storedEvents) ;  
 };
 
 
@@ -53,7 +55,7 @@ const Calendar = () => {
         const formattedStartDate = new Date(info.dateStr).toISOString().slice(0, 16);
         const endDateTime = new Date(info.dateStr);
         const formattedEndDate = endDateTime.toISOString().slice(0, 16);
-
+        // console.log(formattedStartDate, endDateTime, formattedEndDate)
         setFormData((prevData) => ({
             ...prevData,
             startDate: formattedStartDate,
@@ -75,6 +77,7 @@ const Calendar = () => {
             endDate: end.toISOString().slice(0, 16),
         });
         setSelectedEvent(info.event);
+        // console.log(formData)
     };
 
     const handleCloseDrawer = () => {
@@ -89,8 +92,9 @@ const Calendar = () => {
             end: new Date(formData.endDate),
             allDay: formData.allDay
         };
-
+        // console.log(newEvent)
         const updatedEvents = [...events, newEvent];
+        // console.log(updatedEvents)
         setEvents(updatedEvents);
         saveEventsToStorage(updatedEvents);
         setDrawerOpen(false);
@@ -252,17 +256,16 @@ const Calendar = () => {
         );
     };
 
-
     return (
         <>
-            <Card sx={{ display: 'flex', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)', borderRadius: 5, my: 5, py: 3, paddingRight: 3, marginBottom: 10 }}>
+            <Card sx={{ display: 'flex', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)', borderRadius: 5, my: 5, py: 3, marginBottom: 10 }}>
                 <Box sx={{ padding: 5 }}>
                     <Button onClick={handleAddEventClick} variant="contained" sx={{ width: '100%' }}>
                         Add Event
                     </Button>
                     <Legend />
                 </Box>
-                <Card style={{ width: '750px' }}>
+                <Card style={{ width: '100%' }}>
                     <CardContent>
                         <FullCalendar
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}

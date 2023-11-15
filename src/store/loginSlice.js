@@ -12,7 +12,7 @@ const loginSlice = createSlice({
         login(state, action){
             if(state.email === action.payload.email && state.password === action.payload.password){
                 state.isLogged = true
-                window.location.href = '/dashboard';
+                window.location.href = '/dashboard/calendar';
             }else{
                 state.invalidLogin = true
             }

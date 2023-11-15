@@ -96,7 +96,7 @@ export const getCategoryColor = (category) => {
   }
 };
 
-export const defaultEvents = [
+export const dummyEvents = [
   {
       title: 'Marks submission',
       category: 'Work',
@@ -185,3 +185,54 @@ export const dummyHistory = [
     {"studentId":"21","type":"CGPA","grade":"8.30"},
     {"studentId":"23","type":"semester-2","grade":"7.13"},
 ]
+
+export const notifications = [
+  {
+    id: 1,
+    sender: 'John Doe',
+    message: 'Liked your post!',
+    avatar: avatar12,
+    timestamp: '2 minutes ago',
+    isRead: false,
+  },
+  {
+    id: 2,
+    sender: 'Jane Smith',
+    message: 'Tagged you in a photo',
+    avatar: avatar10,
+    timestamp: '1 hour ago',
+    isRead: true,
+  },
+  {
+    id: 3,
+    sender: 'Ruther',
+    message: 'Meeting tomorrow at 2:00 PM',
+    avatar: avatar24,
+    timestamp: '2 hours ago',
+    isRead: false,
+  },
+  {
+    id: 4,
+    sender: 'Dong Lee',
+    message: 'Check out the latest features in app!',
+    avatar: avatar19,
+    timestamp: '1 day ago',
+    isRead: false,
+  },
+  {
+    id: 5,
+    sender: 'Alice Wonderland',
+    message: 'Received your message',
+    avatar: avatar7,
+    timestamp: '3 days ago',
+    isRead: true,
+  },
+  {
+    id: 6,
+    sender: 'Bob Builder',
+    message: 'Your order has been shipped',
+    avatar: avatar14,
+    timestamp: '5 days ago',
+    isRead: false,
+  },
+];
