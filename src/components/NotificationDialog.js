@@ -5,7 +5,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { notifications } from '../data';
 import EnglishFlag from '../avatars/english.png';
-import UserAvatar from '../avatars/avatar_25.jpg';
+import AccountMenu from './AccountMenu';
 
 export default function NotificationDialog() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,7 +35,8 @@ export default function NotificationDialog() {
       </IconButton>
 
       <IconButton color="inherit" sx={{ marginRight: '10px' }}>
-        <Avatar alt="user-avatar" src={UserAvatar} style={{ borderRadius: '50%', width: '40px', marginLeft: '15px' }} />
+        {/* <Avatar alt="user-avatar" src={UserAvatar} style={{ borderRadius: '50%', width: '40px', marginLeft: '15px' }} /> */}
+        <AccountMenu />
       </IconButton>
 
       <Popover
