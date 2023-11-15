@@ -66,19 +66,38 @@ const Calendar = () => {
     };
 
     const handleEventClick = (info) => {
-        setPrevTitle(info.event.title)
+        setPrevTitle(info.event.title);
         setDrawerOpen(true);
-        const start = info.event.start;
-        const end = info.event.end || info.event.start;
+        
+        const convertToIndianTime = (date) => new Date(date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    
+        const formatDateTime = (dateTime) => {
+            const pad = (value) => String(value).padStart(2, '0');
+            const year = dateTime.getFullYear();
+            const month = pad(dateTime.getMonth() + 1);
+            const date = pad(dateTime.getDate());
+            const hours = pad(dateTime.getHours());
+            const minutes = pad(dateTime.getMinutes());
+            return `${year}-${month}-${date}T${hours}:${minutes}`;
+        };
+    
+        const indianStartDate = convertToIndianTime(info.event.start);
+        const indianEndDate = info.event.end ? convertToIndianTime(info.event.end) : indianStartDate;
+    
+        const formattedStartDate = formatDateTime(indianStartDate);
+        const formattedEndDate = formatDateTime(indianEndDate);
+    
         setFormData({
             eventTitle: info.event.title,
             calendarCategory: info.event.extendedProps.category,
-            startDate: start.toISOString().slice(0, 16),
-            endDate: end.toISOString().slice(0, 16),
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
         });
+    
         setSelectedEvent(info.event);
-        // console.log(formData)
     };
+    
+    
 
     const handleCloseDrawer = () => {
         setDrawerOpen(false);
