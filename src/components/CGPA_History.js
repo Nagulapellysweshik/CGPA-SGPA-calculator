@@ -137,7 +137,7 @@ const CGPAHistory = () => {
             </Box>
             <Divider mt={4} mb={2} />
             <Typography>
-              <strong>Calculated CGPA: {cgpa}</strong>
+              <strong style={{ fontSize: '1.5rem' }}>Calculated CGPA: {cgpa}</strong>
             </Typography>
           </>
         )}

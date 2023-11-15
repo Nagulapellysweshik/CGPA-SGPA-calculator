@@ -10,12 +10,14 @@ import AddIcon from '@mui/icons-material/Add';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { addToHistory } from '../store/historySlice';
 import { useDispatch } from 'react-redux';
+import { IconButton, Snackbar, Alert } from '@mui/material';
 
 const CGPAManual = () => {
   const dispatch = useDispatch();
   const [studentId, setStudentId] = useState('');
-  const [semesters, setSemesters] = useState([{ id: 1, semester: 'semester-1', sgpa: 0, creditsAwarded: 0, totalCredits: 0, },]);
+  const [semesters, setSemesters] = useState([{ id: 1, semester: 'semester-1', sgpa: 0, creditsAwarded: 0, totalCredits: 0, }]);
   const [calculatedCGPA, setCalculatedCGPA] = useState('0.00');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const addSemester = () => {
     const newSemester = {
@@ -29,6 +31,12 @@ const CGPAManual = () => {
   };
 
   const calculateCGPA = () => {
+    if (!studentId || semesters.some(semester => !semester.sgpa || !semester.creditsAwarded || !semester.totalCredits)) {
+      // Show Snackbar for required fields
+      setSnackbarOpen(true);
+      return;
+    }
+
     let totalGradeCredits = 0;
     let totalCredits = 0;
 
@@ -36,8 +44,9 @@ const CGPAManual = () => {
       totalGradeCredits += semesters[i].sgpa * semesters[i].creditsAwarded;
       totalCredits += parseInt(semesters[i].totalCredits);
     }
+
     setCalculatedCGPA((totalGradeCredits / totalCredits).toFixed(2));
-    dispatch(addToHistory({ studentId, type: 'CGPA', grade: (totalGradeCredits / totalCredits).toFixed(2)}));
+    dispatch(addToHistory({ studentId, type: 'CGPA', grade: (totalGradeCredits / totalCredits).toFixed(2) }));
   };
 
   const handleSetSemester = (value, semester, setKey) => {
@@ -50,6 +59,13 @@ const CGPAManual = () => {
 
   const deleteLastSemester = () => {
     setSemesters((prevSemesters) => prevSemesters.slice(0, prevSemesters.length - 1));
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
@@ -85,69 +101,65 @@ const CGPAManual = () => {
 
         {semesters.map((semester, index) => (
           <Grow key={index} in={true} timeout={500 + index * 100}>
-          <Box key={semester.id} display="flex" width="100%" mt={2}>
-            <Typography sx={{ mx: 5, marginTop: 4 }}>
-              <strong>Semester{semester.id}</strong>
-            </Typography>
+            <Box key={semester.id} display="flex" width="100%" mt={2}>
+              <Typography sx={{ mx: 5, marginTop: 4 }}>
+                <strong style={{ fontSize: '1.2rem' }} >Semester{semester.id}</strong>
+              </Typography>
 
-            <TextField
-              label="SGPA"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              required
-              sx={{ mx: 2}}
-              inputProps={{ type: 'number', min: 0, max: 10 }}
-              onChange={(e) => handleSetSemester(e.target.value, semester, 'sgpa')}
-            />
-
-            <TextField
-              label="Credits Awarded"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              required
-              sx={{ marginRight: 2}}
-              inputProps={{ type: 'number', min: 0 }}
-              onChange={(e) => handleSetSemester(e.target.value, semester, 'creditsAwarded')}
-            />
-
-            <TextField
-              label="Total Credits"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              required
-              inputProps={{ type: 'number', min: 0 }}
-              onChange={(e) => handleSetSemester(e.target.value, semester, 'totalCredits')}
-            />
-
-            {semester.id === semesters.length && (
-              <Button
+              <TextField
+                label="SGPA"
                 variant="outlined"
-                color="error"
-                onClick={deleteLastSemester}
-                style={{ marginLeft: '10px', height: '56px' }}
-                sx={{marginTop: 2}}
-              >
-                <DeleteIcon />
-              </Button>
-            )}
-          </Box>
+                fullWidth
+                margin="normal"
+                required
+                sx={{ mx: 2 }}
+                inputProps={{ type: 'number', min: 0, max: 10 }}
+                onChange={(e) => handleSetSemester(e.target.value, semester, 'sgpa')}
+              />
+
+              <TextField
+                label="Credits Awarded"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                required
+                sx={{ marginRight: 2 }}
+                inputProps={{ type: 'number', min: 0 }}
+                onChange={(e) => handleSetSemester(e.target.value, semester, 'creditsAwarded')}
+              />
+
+              <TextField
+                label="Total Credits"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                required
+                inputProps={{ type: 'number', min: 0 }}
+                onChange={(e) => handleSetSemester(e.target.value, semester, 'totalCredits')}
+              />
+
+              {semester.id === semesters.length && (
+                <IconButton
+                  color="error"
+                  onClick={deleteLastSemester}
+                  style={{ marginLeft: '10px', height: '56px' }}
+                  sx={{ marginTop: 2 }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Box>
           </Grow>
         ))}
 
-        <Button
-          variant="contained"
+        <IconButton
           color="primary"
           onClick={addSemester}
-          mt={2}
           style={{ marginTop: '16px' }}
+          sx={{ marginTop: 2 }}
         >
-          <AddIcon />
-       
-        </Button>
-
+          <AddIcon sx={{ fontSize: '2.5rem' }} />
+        </IconButton>
         <Button
           variant="contained"
           color="primary"
@@ -160,12 +172,24 @@ const CGPAManual = () => {
         </Button>
 
         {semesters.length > 0 && (
-          <Typography sx={{ my: 3,}}><strong>CGPA: {calculatedCGPA}</strong></Typography>
+          <Typography sx={{ my: 3, }}><strong style={{ fontSize: '1.5rem' }}>Overall CGPA: {calculatedCGPA}</strong></Typography>
         )}
+
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={2000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity="error"
+          >
+            Fill required fields
+          </Alert>
+        </Snackbar>
       </Box>
     </Grow>
   );
 };
 export default CGPAManual;
-
-

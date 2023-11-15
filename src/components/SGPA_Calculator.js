@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setStudentId,
-  setSemester,
-  setSubjects,
-  setSGPA,
-  setTotalCredits,
-  clearData,
-} from '../store/sgpaSlice';
+import {setStudentId, setSemester, setSubjects, setSGPA, setTotalCredits, clearData,} from '../store/sgpaSlice';
 import { addToHistory } from '../store/historySlice';
-import {
-  TextField,
-  Button,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Typography,
-  Paper,
-  Grow,
-} from '@mui/material';
+import { TextField, Button, Box, FormControl, InputLabel, Select, MenuItem, Typography, Paper, Grow, Snackbar,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import { IconButton } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 const SGPACalculator = () => {
   const dispatch = useDispatch();
@@ -31,6 +15,8 @@ const SGPACalculator = () => {
   const { studentId, semester, subjects, sgpa } = sgpaState;
 
   const [emptyInputs, setEmptyInputs] = useState(Array(subjects.length).fill(false));
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
     const storedSubjects = JSON.parse(localStorage.getItem(studentId)) || {};
@@ -52,11 +38,16 @@ const SGPACalculator = () => {
   };
 
   const calculateSGPA = () => {
+    if (!studentId || subjects.some(subject => !subject.name || isNaN(subject.grade) || isNaN(subject.credits))) {
+      setSnackbarMessage('Enter required values');
+      setSnackbarOpen(true);
+      return;
+    }
+
     let totalCredits = 0;
     let totalPoints = 0;
 
     const newEmptyInputs = [];
-
     subjects.forEach((subject, index) => {
       totalCredits += parseInt(subject.credits || 0, 10);
       totalPoints +=
@@ -107,21 +98,30 @@ const SGPACalculator = () => {
   };
 
   const saveSubjectsToLocalStorage = () => {
+    if (!studentId || subjects.some(subject => !subject.name || isNaN(subject.grade) || isNaN(subject.credits))) {
+      setSnackbarMessage('Enter required values');
+      setSnackbarOpen(true);
+      return;
+    }
+
     const storedSubjects = JSON.parse(localStorage.getItem(studentId)) || {};
     storedSubjects[semester] = subjects;
     localStorage.setItem(studentId, JSON.stringify(storedSubjects));
+    setSnackbarMessage('Subjects saved successfully');
+    setSnackbarOpen(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
     <Grow in={true} timeout={1000}>
-      <Box
-        component={Paper}
-        p={4}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        boxShadow={5}
+      <Box component={Paper} p={4} display="flex" flexDirection="column" alignItems="center" justifyContent="center"
+        boxShadow={5} 
         borderRadius={8}
         bgcolor="white"
         width="90%"
@@ -133,14 +133,10 @@ const SGPACalculator = () => {
           SGPA Calculator
         </Typography>
 
-        <TextField
-          label="Student ID"
-          variant="outlined"
-          value={studentId}
-          fullWidth
-          margin="normal"
-          onChange={(e) => dispatch(setStudentId(e.target.value))}
-          required
+        <TextField label="Student ID" variant="outlined" value={studentId} fullWidth margin="normal" required
+          onChange={(e) => {
+            dispatch(setStudentId(e.target.value));
+          }}
         />
 
         <FormControl fullWidth variant="outlined" margin="normal" required>
@@ -148,7 +144,9 @@ const SGPACalculator = () => {
           <Select
             value={semester}
             label="Semester"
-            onChange={(e) => dispatch(setSemester(e.target.value))}
+            onChange={(e) => {
+              dispatch(setSemester(e.target.value));
+            }}
           >
             <MenuItem value="semester-1">Semester 1</MenuItem>
             <MenuItem value="semester-2">Semester 2</MenuItem>
@@ -159,20 +157,13 @@ const SGPACalculator = () => {
 
         {subjects.map((subject, index) => (
           <Grow key={index} in={true} timeout={500 + index * 100}>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              mt={2}
-              key={index}
-              component={Paper}
-              elevation={3}
-              p={2}
-              borderRadius={8}
-              style={{
-                border: emptyInputs[index] ? '1px solid red' : '',
-                transition: 'border 0.3s ease-out',
-              }}
+            <Box display="flex" alignItems="center" justifyContent="center" mt={2} key={index} component={Paper} width={800} p={2}
+            elevation={3}
+            borderRadius={8}
+            style={{
+              border: emptyInputs[index] ? '1px solid red' : '',
+              transition: 'border 0.3s ease-out',
+            }}
             >
               <TextField
                 label="Subject Name"
@@ -218,15 +209,14 @@ const SGPACalculator = () => {
           </Grow>
         ))}
 
-        <Button
-          variant="contained"
+        <IconButton
           color="primary"
           onClick={addSubject}
-          mt={2}
           style={{ marginTop: '16px'}}
+          sx={{ marginTop: 2 }}
         >
-          <AddIcon />
-        </Button>
+          <AddIcon sx={{ fontSize: '2.5rem' }} />    
+        </IconButton>
         <Button
           variant="contained"
           color="primary"
@@ -237,9 +227,8 @@ const SGPACalculator = () => {
           <EqualizerIcon />
           Calculate SGPA
         </Button>
-
-        <Box mt={2}>
-          <strong>Overall SGPA: {sgpa.toFixed(2)}</strong>
+        <Box mt={2} >
+          <strong style={{ fontSize: '1.5rem' }}>Overall SGPA: {sgpa.toFixed(2)}</strong>
           <br />
         </Box>
         <Box mt={2} display="flex" justifyContent="space-between" width="100%">
@@ -251,6 +240,22 @@ const SGPACalculator = () => {
           >
             Save Subjects
           </Button>
+
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={2000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          >
+            <MuiAlert
+              elevation={2}
+              variant="filled"
+              onClose={handleCloseSnackbar}
+              severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+            >
+              {snackbarMessage}
+            </MuiAlert>
+          </Snackbar>
 
           <Button
             variant="outlined"

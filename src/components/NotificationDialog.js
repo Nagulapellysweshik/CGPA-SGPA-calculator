@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Popover from '@mui/material/Popover';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import EnglishFlag from '../avatars/english.png';
-import UserAvatar from '../avatars/avatar_25.jpg';
+import {Avatar, IconButton, Badge, Popover, List, ListItem, ListItemAvatar, ListItemButton, ListItemText,} from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import {notifications} from '../data'
-
-
+import { notifications } from '../data';
+import EnglishFlag from '../avatars/english.png';
+import UserAvatar from '../avatars/avatar_25.jpg';
 
 export default function NotificationDialog() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -56,8 +46,8 @@ export default function NotificationDialog() {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <List sx={{ minWidth: 300, maxWidth: 400 }}>
-          <ListItem sx={{ textAlign: 'left', fontSize: '1.5rem' }}>
-            Notifications
+          <ListItem sx={{ textAlign: 'left', fontSize: '1.3rem' }}>
+            <NotificationsIcon  sx={{ color: 'grey', fontSize: '2rem' }} />Notifications 
           </ListItem>
           <ListItem sx={{ textAlign: 'left', borderBottom: '0.5px solid #ddd', paddingBottom: '10px', marginBottom: '10px', fontSize: '1rem', color: 'gray' }}>
             You have {unreadCount} unread messages

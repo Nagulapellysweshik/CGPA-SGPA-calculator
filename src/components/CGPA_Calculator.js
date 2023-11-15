@@ -24,7 +24,7 @@ const CGPACalculator = () => {
           variant="contained"
           color="primary"
           onClick={toggleView}
-          style={{ color: 'white' }}
+          style={{ color: 'white', marginBottom: '20px',}}
         >
           {showManual ? 'Switch to CGPA History' : 'Switch to Manual Entry'}
         </Button>
