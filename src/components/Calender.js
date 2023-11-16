@@ -315,7 +315,9 @@ const Calendar = () => {
             </Card>
 
             <Drawer anchor="right" open={drawerOpen} onClose={handleCloseDrawer}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', padding: 5, marginTop: 5}}>
+                {/* <Box sx={{ display: 'flex', flexDirection: 'column', padding: 5, marginTop: 5}}> */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', padding: 5, zIndex: 1500 }}>
+
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
                         <Typography variant="h6">{selectedEvent ? 'Update Event' : 'Add Event'}</Typography>
                         <Box>

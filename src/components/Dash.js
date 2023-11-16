@@ -18,12 +18,12 @@ export default function Dash() {
         setOpen(!open);
     };
 
-    return (<Box sx={{ display: 'flex' }}>
+    return (<Box sx={{ display: 'flex'}}>
                 <CssBaseline />
-                <AppBar position="absolute" open={open} >
+                <AppBar position="absolute" open={open} sx={{ zIndex: 1000 }} >
 
                     <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-                        <Box sx={{display: 'flex'}}>
+                        <Box sx={{display: 'flex',}}>
                             <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer}
                                 sx={{
                                     marginRight: '36px',
