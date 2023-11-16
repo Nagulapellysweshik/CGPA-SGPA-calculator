@@ -105,7 +105,6 @@ const CGPAManual = () => {
               <Typography sx={{ mx: 5, marginTop: 4 }}>
                 <strong style={{ fontSize: '1.2rem' }} >Semester{semester.id}</strong>
               </Typography>
-
               <TextField
                 label="SGPA"
                 variant="outlined"
